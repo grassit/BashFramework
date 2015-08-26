@@ -1,0 +1,1 @@
+Functions related to the BashFramework itself.
