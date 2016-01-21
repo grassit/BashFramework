@@ -21,3 +21,26 @@ better_name_grep() {
 #
 #}
 
+# This function replaces the inbuilt rm command to provide following functionalities
+# Moves files to Trash instead of deleting them. Empties trash if full or above given quota
+# Ignore rm commands on system directories
+# Maintains a log of file deletions and command runs in data/logs/bash-framework/rm{date}.log
+
+declare -r TRASH_LOCATION="/home/$USER/.local/share/Trash/files"
+declare -a PROTECTED=("/")
+
+# Function to initialize the required variables for rm function
+__rm_init() {
+	# All top level directories are protected
+	top_dirs="`/bin/ls /`"
+	for d in "$top_dirs"; do
+		echo "d"
+	done
+	echo abc
+}
+#echo `__rm_init` # Invoke the init function
+
+_rm() {
+	:
+}
+

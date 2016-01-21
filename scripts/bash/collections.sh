@@ -1,3 +1,9 @@
+# TODO: bash functions cannot return arrays or associative arrays. But they can export variables. 
+# As with status using $? you can return values using a variable called _result.
+# Call array processing function and assign _result to a variable of your choice.
+
+# TODO: find out how bash functions work. 
+
 # Function to maintain a hashmap in bash
 
 declare -r TRUE=1

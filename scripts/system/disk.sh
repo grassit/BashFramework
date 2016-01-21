@@ -77,10 +77,7 @@ replace_in_files() {
 	grep -R --include="$file_name_pattern" "$text_to_search" .
 }
 
-# Default definition of what recent means. 1 Month
-declare RECENT_LIMIT=abc
-# This function returns a list of files that have not been recently accessed. Only file paths are 
-# returned without anything else so that the output can be pipd into other commands such as rm.
-find_not_recently_accessed() {
-	:
+# finds by name in subdirectories. Ignores permission and other errors.
+findn() {
+    find . -name "*$1*" 2>/dev/null
 }

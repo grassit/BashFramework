@@ -17,25 +17,6 @@ dirsize() {
     du --max-depth=1 -h
 }
 
-# TODO: remove this function. It enforces bad habit. The better way to search is to use locate command with a regex pattern.
-# TODO: have it ignore permission errors
-# finds by name in subdirectories
-findn() {
-    find . -name "*$1*"
-}
-
-
-#TODO define this function to search files by modification time.
-# In order to make it convenient we fist need to understand how it works first. Understand how to find files by range, after a date, on a date etc,
-findm() {
-	:
-}
-
-# find by name and modification time
-findnm() {
-	:
-}
-
 # Reads and returns value of a variable whose name is specified as an argument
 # Usage: varvalue=$(read_var var_with_varname)
 # Arrays returned from bash functions get flattened into a string. In that case wrap above expression inside a () to convert back to array.
@@ -113,7 +94,6 @@ _xargs() {
 	:
 }
 
-# TODO: define a function that not only find but allows you to change current directory to the result. If there is only a single math it automatically goes to that director. If multiple then it shows a numbered list and asks for a number which is then visited. It could be named "visit". You could define a function that opens in vim the last searched file whose directory was visited.
 
 #TODO: define a function that supresses rm on ~, /, /opt and all top level directories. Instead of removing /tmp you should remove stuff inside /tmp
 

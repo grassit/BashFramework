@@ -1,3 +1,11 @@
+# Uses intellij diff to diff two files
+IDEA_HOME="/opt/intellij14.1/"
+dif() {
+	file1=$1
+	file2=$2
+	`$IDEA_HOME/bin/idea.sh diff $file1 $file2`
+}
+
 start_jenkins() {
 	j8
 	$JENKINS_HOME/bin/startup.sh

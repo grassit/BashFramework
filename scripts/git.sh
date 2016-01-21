@@ -20,6 +20,40 @@ auto_push() {
 	git config credential.helper store
 	git push
 }
+
+git_gen_ignore_file() {
+echo "$(cat <<-EOF
+*/target/**
+target/**
+*.log
+*.log.*
+*.iml
+.idea
+.svn
+EOF
+)" > .gitignore
+}
+
+# Fetches latest svn commits for repos in all subdirectories
+# TODO: test if working
+git_svn_fetch_all() {
+	repos=`find . -name '.git'`
+	echo $repos
+	for i in "$repos"
+    do
+    	dir=`pwd`
+    	cd `dirname $i`
+    	echo "cd `dirname $i`"
+        git svn fetch
+        echo "--------------------"
+        cd $dir
+    done
+}
+
+# TODO: how to search for a term in all revisions of a file not just current version
+# TODO: search for first occurence of given term in history of a file
+
+
 #giggle
 #git-cola
 #giteye

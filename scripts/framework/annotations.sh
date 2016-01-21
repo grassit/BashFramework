@@ -1,0 +1,1 @@
+## Defines functionality that allows supporting annotations on bash functions

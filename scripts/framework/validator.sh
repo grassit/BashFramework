@@ -24,6 +24,18 @@ check_quote() {
 	:
 }
 
+# Checks that all usages of string variables are quoted
+# This can be accomplished by explicitly marking certain variables as string during declaration
+# After that all occurances of that variable should be quoted
+check_string_quote() {
+	:
+}
+
+# Checks that all occurences of echo are quoted
+check_echo_quote() {
+	:
+}
+
 # Checks that when system programs are overriden a replacement is provided via _ syntax
 check_overrides() {
 	:

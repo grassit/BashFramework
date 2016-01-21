@@ -10,6 +10,8 @@ svnpath=""
 # Default number of days for fetching history
 days=""
 
+# TODO: modify each function name so that it starts with svn_
+
 # why this function? Following command returns output like this:
 # svn log svn://57.5.179.19/revenue-integrity | grep RAI-417
 # Output: "RAI-417 : Update accepted ticketing types to exclude TKNM and TKNA (delete ITC test)"
@@ -17,6 +19,10 @@ days=""
 # Define this function to search in svn log with proper output
 function search_in_comments() {
     :
+}
+
+function svn_set_path() {
+    svnpath="$1"
 }
 
 # Outputs the full history of a given file as a sequence of
@@ -46,6 +52,22 @@ function diff_all_file_revisions() {
             echo
         done
     }
+}
+
+# Dumps the full history of all files under a given path as diff.
+function get_diff_for_all_subpaths() {
+    path=$1
+    files=$(__svn_ls_all $path)
+    for file in $files; do
+        # Find relative directory name
+        echo `str_delete_all $file $path`
+        # Find file name
+        echo `basename $file`
+        # Create directory
+        
+        # Find diff and save as file
+        #$(diff_all_file_revisions $file)
+    done
 }
 
 # Similar to diff_all_revisions except it diffs given revisions. Required revisions specified by revision number range
@@ -174,6 +196,23 @@ svn_selective_checkout() {
     :
 }
 
+# Updates all repositories in any of the subdirectories. 
+# Usage: svn_update_all
+svn_update_all() {
+    # Find all svn repositories in subdirectories
+    repos=`find . -name '.svn'`
+
+    # TODO: print number of repositories found and being updated
+
+    # Update each repo
+    for i in "$repos"
+    do
+        svn update `dirname $i`
+        echo
+        #TODO: print line of - to seperate each update output from other
+    done
+}
+
 # Replicates the directory structure at given svn path recursively
 # TODO: broken, does not work
 __svn_replicate_dirs() {
@@ -203,4 +242,28 @@ __svn_ls_files() {
     list=($(svn ls $1))
     files=$(remove_all /$ ${list[@]})
     echo ${files[@]}
+}
+
+# Returns list of all subpaths under given path
+__svn_ls_all() {
+    local path=$1
+    list=($(svn ls $path))
+    files=$(remove_all /$ ${list[@]})
+
+    for file in $files; do
+        echo $path/$file
+    done
+    
+    dir_list=$(retain_all /$ ${list[@]})
+
+    for dir in $dir_list; do
+        __svn_ls_all $path/$dir
+    done
+}
+
+# Show list of persons responsible for this file.
+# Author: ksharma 19 June 2013
+# Others: asharma, bsharma
+svn_blame() {
+    :
 }

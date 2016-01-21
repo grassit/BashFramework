@@ -15,7 +15,3 @@ declare -r DUMP_LOCATION='/tmp'
 capture_traffic() {
 	:
 }
-
-cntlm_start() {
-	sudo cntlm -v > /var/log/cntlm.log 2>&1 &
-}

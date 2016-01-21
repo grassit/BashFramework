@@ -8,7 +8,11 @@
 # function $MODULE_PREFIX_list() {}
 # This would allow us to easily rename our functions and modules
 
+#MODULE_PREFIX="fn"
+
 # Shows the definition of a given function
+# Usage: fn_def function-name
+# Example: fn_def ???
 fn_def() {
 	:
 	# TODO: here use grep with regular expressions to eliminate private functions that start with _
@@ -17,24 +21,66 @@ fn_def() {
 	# Function name to next index is function body.
 }
 
-list_functions() {
+# Function to print list of functions in a module
+# Usage: fn_list module-name
+# Example: fn_list dir
+fn_ls() {
 	module_name=$1
+	# TODO: use assert function instead of manual check
 	if [ -z "$module_name" ]; then
 		echo "Please specify the module name."	
 		return
 	fi
 	module=`find . -name "$module_name.sh"`
-	funtions=`cat $module`
+	functions=`cat $module`
+	echo "$functions" | grep "Usage: "
+
 	# TODO: here use grep to search for 
 }
 
+# Prints list of packages in framework. Takes no argument
+# Usage: fn_ls_package
+# Usage: fn_ls_package
+fn_ls_package() {
+	directories="`find $BASH_HOME/scripts -type d`"	
+	i=0
+	for d in ${directories[@]}; do
+		echo "$i)"`basename $d`
+		i=$((i+1))
+	done
+}
+
+# Function to print list of modules in the framework
+# Usage: fn_ls_mod module-name
 # TODO: make add an argument to display only modules in a particular category
-list_modules() {
+fn_ls_mod() {
+	module_name=$1
+	directories="`find $BASH_HOME/scripts -name $module_name -type d`"	
+
+	for d in ${directories[@]}; do
+		modules="`find $d -maxdepth 1 -name '*.sh'`"
+		for m in $modules; do
+			echo `basename $m`
+		done
+	done
+}
+
+fn_list_cat() {
+	directories="`find $BASH_HOME/scripts -type d`"
+
+	for d in ${directories[@]}; do
+		echo `basename $d`
+		# TODO: instead of outputting a fixed number of =, output equal to length of string
+	done
+}
+
+# Outputs all the modules and functions in the framework
+fn_ls_all() {
 	directories="`find $BASH_HOME/scripts -type d`"	
 
 	for d in ${directories[@]}; do
 		echo "=========="
-		echo $(string_uppercase `basename $d`)
+		echo $(str_uppercase `basename $d`)
 		# TODO: instead of outputting a fixed number of =, output equal to length of string
 		echo "=========="
 		modules="`find $d -maxdepth 1 -name '*.sh'`"
@@ -45,17 +91,9 @@ list_modules() {
 	done
 }
 
-list_categories() {
-	directories="`find $BASH_HOME/scripts -type d`"
-
-	for d in ${directories[@]}; do
-		echo `basename $d`
-		# TODO: instead of outputting a fixed number of =, output equal to length of string
-	done	
-}
 
 # Shows usage syntax for a function
-usage() {
+fn_usage() {
 	:
 }
 

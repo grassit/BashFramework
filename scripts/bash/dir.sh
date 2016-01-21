@@ -19,3 +19,21 @@ is_file() {
     	echo $FALSE
     fi
 }
+
+# Concats two given paths. Handles path separator properly
+# Example: dir_concat /abc/ efg ijk
+# Output: /abc/efg/ijk
+# Example: dir_concat abc/ efg/ ijk/
+# Output: /abc/efg/ijk
+dir_concat() {
+    args=("$@")
+    local path=""
+    for p in ${args[@]}; do
+        path=$path$p/
+    done
+    # Remove multiple slashes
+    path=$(str_regex_replace_all "$path" '\/\/*' '\/')
+    # Remove trailing slash
+    path=$(str_regex_replace_all "$path" '\/$' '')
+    echo $path
+}
