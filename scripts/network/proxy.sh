@@ -34,6 +34,8 @@ proxy_unset() {
 
 	echo rm $APT_PROXY_CONF
 	rm $APT_PROXY_CONF
+
+	echo "Acquire::http::Proxy \"false\";" > /etc/apt/apt.conf
 }
 
 proxy_show() {

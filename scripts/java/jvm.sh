@@ -45,16 +45,16 @@ echo JAVA_HOME=$J8_HOME
 ####### Creates classpath from given directory. Can be used for setting classpath when running a Java command. ######
 # Usage: java -jar jarname -cp `dir_to_cp /path/to/dependency_dir`
 java_dir_to_cp() {
-jars=$(find $1 2>/dev/null -name '*.jar')
-cp=""
-for f in $jars
-do
-	cp=$cp:$f
-done
-# Delete the obsolete leading colon
-cp=${cp#:}
+	jars=$(find $1 2>/dev/null -name '*.jar') # Enumerate all JARs
+	cp=""
+	for f in $jars # Append all JARs to classpath
+	do
+		cp=$cp:$f
+	done
+	# Delete the obsolete leading colon
+	cp=${cp#:}
 
-printf $cp
+	printf $cp
 }
 
 ####### Expands to full set of arguments required to run JVM in debug mode #######

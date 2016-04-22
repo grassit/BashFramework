@@ -26,6 +26,7 @@ BLUE info messages, what the function is trying to do
 RED error messages, what the function couldn't do
 - When system commands are improvised and replaced the original versions are made available via syntax _commandname. This would cause any third party scripts that rely on these programs to fail.
 - Private functions are declared with double underscore like __private_funct() {}, These are for internal module use only and not to be invoked from other modules or directly by the user.
+- Declare variables as local by default. Example: `local str="my string"`
 
 
 ## NOTES

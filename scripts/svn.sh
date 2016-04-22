@@ -33,40 +33,37 @@ function svn_set_path() {
 # TODO: add functionality to specify file by name or pattern. There are multiple files with that name it could show list and ask for 
 # option 1 or 2
 function diff_all_file_revisions() {
-    url=$1 # current url of file
-    svn log -q $url | grep -E -e "^r[[:digit:]]+" -o | cut -c 2- | sort -nr | {
+    url=$1
+    revisions=`svn log -q $url | grep -E -e "^r[[:digit:]]+" -o | cut -c 2- | sort -nr` # Find all revisions of the file
+    revisions=($revisions) # Convert to array
 
-#       first revision as full text
-        echo
-        read r
-        svn log -r$r $url@HEAD
-        svn cat -r$r $url@HEAD
-        echo
+    # Head revision as full text
+    svn cat -r${revisions[0]} $url
 
-#       remaining revisions as differences to previous revision
-        while read r
-        do
-            echo
-            svn log -r$r $url@HEAD
-            svn diff -c$r $url@HEAD
-            echo
-        done
-    }
+    # Rest of revisions as difference
+    arr_len=${#revisions[@]}
+    for ((index=0; index < $(($arr_len-1)); index++)); do
+        svn log -r ${revisions[index]} $url
+        svn diff -r ${revisions[index+1]}:${revisions[index]} $url        
+    done
+
+    # Last revision as full text
+    svn log -r ${revisions[arr_len-1]} $url
+    svn cat -r${revisions[arr_len-1]} $url
 }
 
 # Dumps the full history of all files under a given path as diff.
 function get_diff_for_all_subpaths() {
     path=$1
     files=$(__svn_ls_all $path)
-    for file in $files; do
-        # Find relative directory name
-        echo `str_delete_all $file $path`
-        # Find file name
-        echo `basename $file`
-        # Create directory
+    for file in $files; do        
+        dir_name=`dirname $(str_delete_all $file $path\/)` # Find relative directory name
+        `mkdir -p $dir_name` # Create directory
+        file_name=`basename $file` # Find file name
         
         # Find diff and save as file
-        #$(diff_all_file_revisions $file)
+        echo `dir_concat $dir_name $file_name`
+        $(diff_all_file_revisions $file > `dir_concat $dir_name $file_name`)        
     done
 }
 

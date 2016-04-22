@@ -2,15 +2,25 @@
 ### TODO: remove non programming related functions to other file. find command should be in system programs script. To bash it is just another exe
 ### Its not specific to bash.
 
+# TODO: move the functions in this file to their proper modules and delete this file
+
 # Define the prompt to be colored and short
 PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\u\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 
 declare -r SUCCESS=0
 declare -r ERROR=1
 
+# TODO: define function
+# Find and open. Finds a subdirectory matching given name pattern and opens it.
+# Example: fo c.india.t opens Customers/air-india/trunk
+fo() {
+	:
+}
+
 # Display cowsay
 # TODO: replace cowsay with more useful information such as number of new mails you have sent by cron jobs
 # Or by important reminders such as list of TODOs. You hardly look at cowsay anymore. You could scan all shell files and pick first few TODOs to display
+# TODO: this statement should only be executed if cowsay and fortune exist on the system. Otherwise bashframework displays an error on startup.
 fortune | cowsay
 
 dirsize() {
