@@ -1,15 +1,8 @@
-
 # Running this will cause the credentials used to push or pull from server to be cached, and you won't be asked again
 alias git_cache_credentials="git config credential.helper store"
 
-# Git log
-##########
-alias gitl='git log --name-only --graph --all' # Git log
-alias gitls='git log --pretty=format:"%ad %Cblue[%an]%Creset %C(red bold)%s%d%Creset %h" --date=short' # Git simple log
-alias gitlsn='git log --pretty=format:"%ad %Cblue[%an]%Creset %C(red bold)%s%d%Creset %h" --date=short -n 10' # Git simple log, last 10 lines
-alias gitla='git log --pretty=format:"%ad %Cblue[%an]" --date=short' # Git authors log
-alias gitlc='git log --pretty=format:"%ad %C(red bold)%s%d" --date=short' # Git comment log
-##########
+alias gitp="git --no-pager"
+
 
 #TODO: git function to check if we're in sync with the remote repo. i.e. if our head is at the top. i.e. do we need to rebase?
 # Output: "You are 3 commits behind from remote"
@@ -25,6 +18,7 @@ git_revert() {
 }
 
 git_setup_aliases() {
+    # Probably not needed. Unnecessary optimizations. Because checkout and creation of branch are not operations done that often. Instead try to maximize usability by allowing hard to do tasks easily.
     git config --global alias.co checkout
     git config --global alias.br branch
     git config --global alias.ci commit
@@ -66,6 +60,7 @@ target/**
 .svn
 .pyc
 .class
+*~
 EOF
 )" > .gitignore
 }
@@ -104,15 +99,6 @@ git_find_dormant() {
 # TODO: search for first occurence of given term in history of a file
 
 
-# TODO: move these guis to command guide and not here
-#giggle
-#git-cola
-#giteye
-#gitg
-#gitk
-
-
-
 
 # TODO: What does this function do? Does it work?
 git_find_by_name() {
@@ -131,3 +117,4 @@ git_find_by_name() {
     cd $tmpdir
     grep $1 * 
 }
+

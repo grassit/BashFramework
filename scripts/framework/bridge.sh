@@ -1,0 +1,1 @@
+### This file defines a bash to golang bridge. This allows us to integrate with bash yet write out the implementation of complex functions in golang. For example: string manipulation could be done better with golang than bash which has to rely on hacks and regexes.

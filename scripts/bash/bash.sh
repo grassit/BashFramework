@@ -7,6 +7,8 @@
 # Define the prompt to be colored and short
 PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\u\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 
+alias xclip="xclip -selection c"
+
 declare -r SUCCESS=0
 declare -r ERROR=1
 
@@ -21,7 +23,7 @@ fo() {
 # TODO: replace cowsay with more useful information such as number of new mails you have sent by cron jobs
 # Or by important reminders such as list of TODOs. You hardly look at cowsay anymore. You could scan all shell files and pick first few TODOs to display
 # TODO: this statement should only be executed if cowsay and fortune exist on the system. Otherwise bashframework displays an error on startup.
-fortune | cowsay
+#fortune | cowsay
 
 dirsize() {
     du --max-depth=1 -h
@@ -106,4 +108,25 @@ _xargs() {
 
 
 #TODO: define a function that supresses rm on ~, /, /opt and all top level directories. Instead of removing /tmp you should remove stuff inside /tmp
+
+# Function to find directory by name and cd it
+# TODO: validate the the input is a number 
+# TODO: extend it to allow searching by name
+fcd() {
+	pattern="$1"
+	directories=(`find . -iname "*$pattern*" -type d 2>/dev/null`)
+	i=1
+	for dir in ${directories[@]}; do
+		echo $i `dirname $dir`/`basename $dir`
+		(( i+=1 ))
+	done
+	read choice
+	choice=$((choice-1))
+	cd ${directories[choice]}
+}
+
+# Find and edit. Finds a given file by name and opens it for editing
+fe() {
+	:
+}
 
